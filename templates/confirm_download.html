@@ -1,0 +1,19 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Download</title>
+</head>
+<body>
+    <h1>Confirm Download</h1>
+    <p>You have selected the following data options for download:</p>
+    <ul>
+        {% for option in selected_options %}
+            <li>{{ option }}</li>
+        {% endfor %}
+    </ul>
+    <form method="POST" action="/initiate_download">
+        <input type="hidden" name="selected_options" value="{{ selected_options | join(',') }}">
+        <input type="submit" value="Confirm and Download">
+    </form>
+</body>
+</html> -->

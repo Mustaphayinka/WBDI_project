@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Bank Data Download</title>
+    <!-- Add Tailwind CSS CDN link here -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <!-- <p class="text-gray-600 mb-2">
+            This website is an independent platform for accessing World Bank data and is not affiliated with or endorsed by the World Bank.
+        </p> -->
+        <h1 class="text-3xl font-semibold mb-4">World Bank Data Download</h1>
+        <form method="POST" class="mb-4">
+            <label for="data_option" class="block">Select Data Option:</label>
+            <select id="data_option" name="data_option" class="w-full border p-2 rounded-md">
+                {% for option in data_options %}
+                <option value="{{ loop.index0 }}">{{ option.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="button" id="add_to_selected_data" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Add to Selected Data
+            </button>
+        </form>
+
+        <!-- Selected Data section -->
+        <h2 class="text-xl font-semibold mb-2">Selected Data</h2>
+        <ul id="selected_data" class="list-disc pl-6 mb-4 space-y-2">
+            <!-- Selected data variables will be displayed here -->
+        </ul>
+
+        <!-- Download button -->
+        <form method="POST" action="/confirm_download" class="mb-4">
+            <input type="hidden" id="selected_options" name="selected_options" value="">
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                Download Selected Data
+            </button>
+        </form>
+    </div>
+
+    <!-- Add a footer for data source attribution -->
+    <footer class="bg-gray-300 p-4 text-center">
+        <p class="text-gray-600 text-sm">
+            Data provided by <a href="https://data.worldbank.org" target="_blank" rel="noopener noreferrer" class="underline">World Bank</a>
+        </p>
+    </footer>
+
+    <!-- JavaScript to handle adding to selected data -->
+    <!-- JavaScript to handle adding to selected data -->
+<script>
+    var selected_data = [];
+
+    document.getElementById("add_to_selected_data").addEventListener("click", function() {
+        var dataOption = document.getElementById("data_option");
+        var selectedOptionIndex = dataOption.selectedIndex;
+
+        // Check if a valid option is selected
+        if (selectedOptionIndex >= 0) {
+            if (selected_data.indexOf(selectedOptionIndex) === -1) {
+                selected_data.push(selectedOptionIndex);
+                var selectedDataList = document.getElementById("selected_data");
+                var listItem = document.createElement("li");
+
+                // Create a wrapper div for proper spacing
+                var itemWrapper = document.createElement("div");
+                itemWrapper.className = "flex items-center"; // Align items horizontally
+
+                listItem.textContent = dataOption.options[selectedOptionIndex].text;
+
+                // Add a "Remove" button next to the item
+                var removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.className = "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 ml-2"; // Added classes for red color and spacing
+                removeButton.addEventListener("click", function() {
+                    // Remove the item from the selected data and the list
+                    selected_data.splice(selected_data.indexOf(selectedOptionIndex), 1);
+                    selectedDataList.removeChild(itemWrapper);
+                });
+
+                // Append the item, the "Remove" button, and the wrapper to the selected data
+                itemWrapper.appendChild(listItem);
+                itemWrapper.appendChild(removeButton);
+                selectedDataList.appendChild(itemWrapper);
+            }
+        } else {
+            alert("Please select a valid data option.");
+        }
+    });
+
+    // Update the hidden input field with selected data options
+    var confirmForm = document.querySelector("form[action='/confirm_download']");
+    confirmForm.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+        document.getElementById("selected_options").value = JSON.stringify(selected_data);
+
+        // Simulate data download
+        setTimeout(function() {
+            // Trigger SweetAlert success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Data Downloaded Successfully!',
+                text: 'Your selected data has been downloaded.',
+                confirmButtonText: 'OK',
+            });
+
+            // Reset the selected_data
+            selected_data = [];
+            document.getElementById("selected_data").innerHTML = '';
+
+            // Submit the form after showing the SweetAlert
+            confirmForm.submit();
+        }, 1000); // Simulate a delay of 1 second (you can adjust this)
+    });
+</script>
+
+    <!-- ... (your existing JavaScript code) ... -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</body>
+</html>
