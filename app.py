@@ -22,7 +22,6 @@ DATA_OPTIONS = [
     {'id': 'FB.BNK.CAPA.ZS', 'name': 'Banking Sector Capitalization Ratio (%)'},
     {'id': 'EN.ATM.CO2E.KT', 'name': 'CO2 Emissions (Kilotons)'},
     {'id': 'EN.ATM.CO2E.KD.GD', 'name': 'CO2 Emissions (kg per 2010 US$ of GDP)'},
-    {'id': 'EN.ATM.CO2E.KD.GD.PP', 'name': 'CO2 Emissions (kg per 2011 PPP $ of GDP)'},
     {'id': 'EN.ATM.CO2E.PC', 'name': 'CO2 Emissions (metric tons per capita)'},
     {'id': 'EN.ATM.CO2E.GF.ZS', 'name': 'CO2 Emissions from Gaseous Fuel Consumption (% of total)'},
     {'id': 'EN.ATM.CO2E.LF.ZS', 'name': 'CO2 Emissions from Liquid Fuel Consumption (% of total)'},
