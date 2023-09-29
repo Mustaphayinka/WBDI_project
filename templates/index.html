@@ -23,6 +23,12 @@
         <!-- <p class="text-gray-600 mb-2">
             This website is an independent platform for accessing World Bank data and is not affiliated with or endorsed by the World Bank.
         </p> -->
+        <!-- <nav class="mb-4">
+            <ul class="flex space-x-4">
+                <li><a href="#" class="text-blue-500">Documentation</a></li>
+                <li><a href="#" class="text-blue-500">Contact</a></li>
+            </ul>
+        </nav> -->
         <h1 class="text-3xl font-semibold mb-4">World Bank Data Download</h1>
         <p class="text-gray-600 mb-2 text-blue-500">
             <em>This application is designed to provide easy access to World Bank data specifically related to</em> <strong>Nigeria</strong>
@@ -56,12 +62,16 @@
 
     </div>
 
-    <!-- Add a footer for data source attribution -->
+        <!-- Footer -->
     <footer class="bg-gray-300 p-4 text-center">
         <p class="text-gray-600 text-sm">
             Data provided by <a href="https://data.worldbank.org" target="_blank" rel="noopener noreferrer" class="underline">World Bank</a>
         </p>
+        <p class="text-gray-600 text-sm mt-2">
+            <a href="{{ url_for('documentation') }}" class="text-blue-500">Documentation</a>
+        </p>
     </footer>
+
 
     <!-- JavaScript to handle adding to selected data -->
     <script>

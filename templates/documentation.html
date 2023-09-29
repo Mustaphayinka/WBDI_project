@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Bank Data Download App Documentation</title>
+    <!-- Add Tailwind CSS CDN link here -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Add custom styles here if needed */
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation bar -->
+    <nav class="bg-blue-500 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-semibold">World Bank Data Download App Documentation</h1>
+        </div>
+    </nav>
+
+    <!-- Table of Contents -->
+    <div class="container mx-auto p-4">
+        <h2 class="text-2xl font-semibold mt-4">Table of Contents</h2>
+        <ol class="list-decimal ml-6">
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
+            <li><a href="#using-the-app">Using the App</a></li>
+            <!-- <li><a href="#advanced-features">Advanced Features</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+            <li><a href="#feedback-and-support">Feedback and Support</a></li> -->
+            <li><a href="#appendix">Appendix</a></li>
+        </ol>
+    </div>
+
+    <!-- 1. Introduction -->
+    <div class="container mx-auto p-4">
+        <h2 id="introduction" class="text-2xl font-semibold mt-4">1. Introduction</h2>
+        <p>
+            The World Bank Data Download App is designed to provide easy access to World Bank data related to Nigeria. You can explore a wide range of data categories and download selected data for your research and analysis.
+        </p>
+    </div>
+
+    <!-- 2. Getting Started -->
+    <div class="container mx-auto p-4">
+        <h2 id="getting-started" class="text-2xl font-semibold mt-4">2. Getting Started</h2>
+        <!-- Accessing the App -->
+        <h3 class="text-xl font-semibold mt-2">Accessing the App</h3>
+        <p>
+            To access the app, simply visit https://wbdidata.onrender.com/ from your web browser.
+        </p>
+        <!-- User Registration -->
+        <!-- <h3 class="text-xl font-semibold mt-2">User Registration</h3>
+        <p> -->
+            <!-- User registration is not required to use the app. However, registered users can enjoy additional features, such as saving selected data options for future use. -->
+        <!-- </p> -->
+    </div>
+
+    <!-- 3. Using the App -->
+    <div class="container mx-auto p-4">
+        <h2 id="using-the-app" class="text-2xl font-semibold mt-4">3. Using the App</h2>
+        <!-- Selecting Data -->
+        <h3 class="text-xl font-semibold mt-2">Selecting Data</h3>
+        <p>
+            On the main page, you'll find a list of available data options related to Nigeria.
+        </p>
+        <p>
+            Use the search bar to find specific data options by name.
+            <!-- or keyword. -->
+        </p>
+        <!-- Adding Data to Selection -->
+        <h3 class="text-xl font-semibold mt-2">Adding Data to Selection</h3>
+        <p>
+            <ol class="list-decimal ml-6">
+                <li>Select a data option from the list.</li>
+                <li>Click the "Add to Selected Data" button.</li>
+                <li>The selected data will appear in the "Selected Data" section.</li>
+            </ol>
+        </p>
+        <!-- Downloading Data -->
+        <h3 class="text-xl font-semibold mt-2">Downloading Data</h3>
+        <p>
+            <ol class="list-decimal ml-6">
+                <li>Select one or more data options.</li>
+                <li>Click the "Download Selected Data" button.</li>
+                <li>The app will prepare your data for download and save the data to your device.</li>
+            </ol>
+        </p>
+    </div>
+
+    
+    <!-- 4. Appendix -->
+    <div class="container mx-auto p-4">
+        <h2 id="appendix" class="text-2xl font-semibold mt-4">4. Appendix</h2>
+
+        <!-- Data Categories -->
+        <h3 class="text-xl font-semibold mt-2">Data Categories</h3>
+        <ul class="list-disc ml-6">
+            {% for option in DATA_OPTIONS %}
+                <li>{{ option['name'] }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3 class="text-lg font-semibold mb-2">Known Limitations</h3>
+        <p>Please be aware of the following limitations when using this app:</p>
+        <ul class="list-disc ml-6">
+            <li>Access to data is limited to information related to Nigeria.</li>
+            <li>The app does not provide data for other countries or regions.</li>
+        </ul>
+    </div>
+
+
+    <div class="flex justify-center mt-8">
+        <a href="/" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">
+            Back to Home
+        </a>
+    </div>
+    
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-300 p-4 text-center mt-4">
+        <p class="text-gray-600 text-sm">
+            Data provided by <a href="https://data.worldbank.org" target="_blank" rel="noopener noreferrer" class="underline">World Bank</a>
+        </p>
+    </footer>
+</body>
+</html>

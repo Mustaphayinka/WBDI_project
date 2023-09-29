@@ -173,5 +173,9 @@ def confirm_download():
         mimetype="text/csv",
     )
 
+@app.route('/documentation')
+def documentation():
+    return render_template('documentation.html', DATA_OPTIONS=DATA_OPTIONS)
+
 if __name__ == "__main__":
     app.run(debug=True)
