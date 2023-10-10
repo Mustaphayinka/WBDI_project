@@ -23,6 +23,12 @@
         <!-- <p class="text-gray-600 mb-2">
             This website is an independent platform for accessing World Bank data and is not affiliated with or endorsed by the World Bank.
         </p> -->
+        <!-- <nav class="mb-4">
+            <ul class="flex space-x-4">
+                <li><a href="#" class="text-blue-500">Documentation</a></li>
+                <li><a href="#" class="text-blue-500">Contact</a></li>
+            </ul>
+        </nav> -->
         <h1 class="text-3xl font-semibold mb-4">World Bank Data Download</h1>
         <p class="text-gray-600 mb-2 text-blue-500">
             <em>This application is designed to provide easy access to World Bank data specifically related to</em> <strong>Nigeria</strong>
@@ -45,90 +51,117 @@
             <!-- Selected data variables will be displayed here -->
         </ul>
 
+       
         <!-- Download button -->
         <form method="POST" action="/confirm_download" class="mb-4">
             <input type="hidden" id="selected_options" name="selected_options" value="">
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            <button type="submit" id="download_button" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" disabled>
                 Download Selected Data
             </button>
         </form>
+
     </div>
 
-    <!-- Add a footer for data source attribution -->
+        <!-- Footer -->
     <footer class="bg-gray-300 p-4 text-center">
         <p class="text-gray-600 text-sm">
             Data provided by <a href="https://data.worldbank.org" target="_blank" rel="noopener noreferrer" class="underline">World Bank</a>
         </p>
+        <p class="text-gray-600 text-sm mt-2">
+            <a href="{{ url_for('documentation') }}" class="text-blue-500">Documentation</a>
+        </p>
     </footer>
 
+
     <!-- JavaScript to handle adding to selected data -->
-    <!-- JavaScript to handle adding to selected data -->
-<script>
-    var selected_data = [];
-
-    document.getElementById("add_to_selected_data").addEventListener("click", function() {
-        var dataOption = document.getElementById("data_option");
-        var selectedOptionIndex = dataOption.selectedIndex;
-
-        // Check if a valid option is selected
-        if (selectedOptionIndex >= 0) {
-            if (selected_data.indexOf(selectedOptionIndex) === -1) {
-                selected_data.push(selectedOptionIndex);
-                var selectedDataList = document.getElementById("selected_data");
-                var listItem = document.createElement("li");
-
-                // Create a wrapper div for proper spacing
-                var itemWrapper = document.createElement("div");
-                itemWrapper.className = "flex items-center"; // Align items horizontally
-
-                listItem.textContent = dataOption.options[selectedOptionIndex].text;
-
-                // Add a "Remove" button next to the item
-                var removeButton = document.createElement("button");
-                removeButton.textContent = "Remove";
-                removeButton.className = "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 ml-2"; // Added classes for red color and spacing
-                removeButton.addEventListener("click", function() {
-                    // Remove the item from the selected data and the list
-                    selected_data.splice(selected_data.indexOf(selectedOptionIndex), 1);
-                    selectedDataList.removeChild(itemWrapper);
-                });
-
-                // Append the item, the "Remove" button, and the wrapper to the selected data
-                itemWrapper.appendChild(listItem);
-                itemWrapper.appendChild(removeButton);
-                selectedDataList.appendChild(itemWrapper);
-            }
-        } else {
-            alert("Please select a valid data option.");
+    <script>
+        var selected_data = [];
+    
+        // Function to enable or disable the Download button
+        function toggleDownloadButton() {
+            var downloadButton = document.getElementById("download_button");
+            downloadButton.disabled = selected_data.length === 0;
         }
-    });
-
-    // Update the hidden input field with selected data options
-    var confirmForm = document.querySelector("form[action='/confirm_download']");
-    confirmForm.addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the form from submitting normally
-        document.getElementById("selected_options").value = JSON.stringify(selected_data);
-
-        // Simulate data download
-        setTimeout(function() {
-            // Trigger SweetAlert success message
-            Swal.fire({
-                icon: 'success',
-                title: 'Data Downloaded Successfully!',
-                text: 'Your selected data has been downloaded.',
-                confirmButtonText: 'OK',
+    
+        // Function to add an item to the selected data
+        function addToSelectedData(selectedOptionIndex) {
+            var dataOption = document.getElementById("data_option"); // Move this line here
+            selected_data.push(selectedOptionIndex);
+            var selectedDataList = document.getElementById("selected_data");
+            var listItem = document.createElement("li");
+    
+            // Create a wrapper div for proper spacing
+            var itemWrapper = document.createElement("div");
+            itemWrapper.className = "flex items-center"; // Align items horizontally
+    
+            listItem.textContent = dataOption.options[selectedOptionIndex].text;
+    
+            // Add a "Remove" button next to the item
+            var removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.className = "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 ml-2"; // Added classes for red color and spacing
+            removeButton.addEventListener("click", function() {
+                // Remove the item from the selected data and the list
+                selected_data.splice(selected_data.indexOf(selectedOptionIndex), 1);
+                selectedDataList.removeChild(itemWrapper);
+                toggleDownloadButton(); // Toggle the button state after removal
             });
-
-            // Reset the selected_data
-            selected_data = [];
-            document.getElementById("selected_data").innerHTML = '';
-
-            // Submit the form after showing the SweetAlert
-            confirmForm.submit();
-        }, 1000); // Simulate a delay of 1 second (you can adjust this)
-    });
-</script>
-
+    
+            // Append the item, the "Remove" button, and the wrapper to the selected data
+            itemWrapper.appendChild(listItem);
+            itemWrapper.appendChild(removeButton);
+            selectedDataList.appendChild(itemWrapper);
+    
+            toggleDownloadButton(); // Toggle the button state after addition
+        }
+    
+        document.getElementById("add_to_selected_data").addEventListener("click", function() {
+            var dataOption = document.getElementById("data_option");
+            var selectedOptionIndex = dataOption.selectedIndex;
+    
+            // Check if a valid option is selected
+            if (selectedOptionIndex >= 0) {
+                if (selected_data.indexOf(selectedOptionIndex) === -1) {
+                    addToSelectedData(selectedOptionIndex);
+                }
+            } else {
+                alert("Please select a valid data option.");
+            }
+        });
+    
+        // Update the hidden input field with selected data options
+        var confirmForm = document.querySelector("form[action='/confirm_download']");
+        confirmForm.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            document.getElementById("selected_options").value = JSON.stringify(selected_data);
+    
+            // Simulate data download
+            setTimeout(function() {
+                // Trigger SweetAlert success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data Downloaded Successfully!',
+                    text: 'Your selected data has been downloaded.',
+                    confirmButtonText: 'OK',
+                });
+    
+                // Reset the selected_data
+                selected_data = [];
+                document.getElementById("selected_data").innerHTML = '';
+    
+                // Toggle the button state back to disabled
+                toggleDownloadButton();
+    
+                // Submit the form after showing the SweetAlert
+                confirmForm.submit();
+            }, 2000); // Simulate a delay of 1 second (you can adjust this)
+        });
+    
+        // Call the toggleDownloadButton function initially to set the initial button state
+        toggleDownloadButton();
+    </script>
+    
+    
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
